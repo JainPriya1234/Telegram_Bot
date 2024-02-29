@@ -123,7 +123,8 @@ const countryCodes = {
     "kyrgyzstan": "KG",
     "lao people's democratic republic": "LA",
     "latvia": "LV",
-    "lebanon": "LB"
+    "lebanon": "LB",
+    "pakistan":"PK"
 }
 
 module.exports={countryCodes}

@@ -11,6 +11,8 @@ bot.on('message',async(msg)=>{
     try{
         const chatId = msg.chat.id;
         const isExist = await User.findOne({chatId:chatId});
+        console.log(isExist.name)
+        const bot = new TelegramBot(token);
         const textMessage = msg.text;
         if(!isExist){                             // For New User
             if(textMessage === '/start'){
@@ -55,6 +57,7 @@ bot.on('message',async(msg)=>{
  */
 const sendMessageToUsers = async()=>{
     const users = await User.find({isActive:true});
+    const bot = new TelegramBot(token);
     for(let i = 0; i < users.length; i++){
         // Fetch Location
         await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${users[i].city},${users[i].country}&limit=1&appid=${process.env.WEATHER_API}`)
@@ -72,6 +75,8 @@ const sendMessageToUsers = async()=>{
         })
         .catch((err)=>{console.log(err); bot.sendMessage(users[i].chatId,'Cannot Fetch Weather Report of City/Country\nPlease Update!')})
     }
+    await bot.stopPolling()
+    delete bot;
 }
 
 module.exports = {sendMessageToUsers}
