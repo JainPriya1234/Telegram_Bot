@@ -1,7 +1,7 @@
 const cron = require('node-cron');
 const { sendMessageToUsers } = require('../service/bot.service')
 
-let cronSchedule = '*/1 * * * *';  // Default CronSchedule
+let cronSchedule = '*/10 * * * *';  // Default CronSchedule
 
 const cronJob = cron.schedule(cronSchedule, async () => {
     console.log('Started Cron Job');

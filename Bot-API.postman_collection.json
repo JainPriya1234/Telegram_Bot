@@ -1,0 +1,122 @@
+{
+	"info": {
+		"_postman_id": "50f83d2c-2069-416a-9954-f9d5acf750c2",
+		"name": "Bot-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25648812",
+		"_collection_link": "https://www.postman.com/cloudy-equinox-213826/workspace/telegram-bot/collection/25648812-50f83d2c-2069-416a-9954-f9d5acf750c2?action=share&source=collection_link&creator=25648812"
+	},
+	"item": [
+		{
+			"name": "getUser",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/getuser",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"getuser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUserByID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/getuser/65df7f1e24a4cf0e1ba8bdfc",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"getuser",
+						"65df7f1e24a4cf0e1ba8bdfc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deactivateUser",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/user/deactivate/65df7f1e24a4cf0e1ba8bdfc",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"deactivate",
+						"65df7f1e24a4cf0e1ba8bdfc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateMessageFrequency",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"schedule\":\"0 * * * *\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/frequency",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"frequency"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_Api-Key",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"apikey\":\"mohit\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/update-apikey",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"update-apikey"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
