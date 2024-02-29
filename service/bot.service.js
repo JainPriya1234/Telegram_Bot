@@ -6,7 +6,7 @@ const {countryCodes} = require('./country.codes')
 dotenv.config()
 
 const token = process.env.TELEGRAM_API
-const bot = new TelegramBot(token, { polling: true });
+const bot = new TelegramBot(token);
 bot.on('message',async(msg)=>{
     try{
         const chatId = msg.chat.id;
