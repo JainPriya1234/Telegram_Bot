@@ -6,12 +6,11 @@ const {countryCodes} = require('./country.codes')
 dotenv.config()
 
 const token = process.env.TELEGRAM_API
-const bot = new TelegramBot(token, { polling: true });
+const bot = new TelegramBot(token);
 bot.on('message',async(msg)=>{
     try{
         const chatId = msg.chat.id;
         const isExist = await User.findOne({chatId:chatId});
-        console.log(isExist.name)
         const bot = new TelegramBot(token);
         const textMessage = msg.text;
         if(!isExist){                             // For New User
@@ -23,6 +22,7 @@ bot.on('message',async(msg)=>{
             return;
         }
         else if(!isExist.name){
+            console.log(isExist.name)
             isExist.name = textMessage;
             bot.sendMessage(isExist.chatId,'Now Please Provide Your Country');
         }
