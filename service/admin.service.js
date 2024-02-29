@@ -1,5 +1,6 @@
 const { createCustomError } = require('../errors/customAPIError');
 const User = require('../model/user')
+const fs = require('fs')
 const cronService = require('../service/cron.service')
 
 const getUser = async(req,res,next)=>{
@@ -37,7 +38,7 @@ const deactivateUserById = async(req,res,next)=>{
     }
 }
 
-const updateFrequency = async(req,res,next)=>{
+const updateMessageFrequency = async(req,res,next)=>{
     try{
         const schedule = req.body.schedule;
         await cronService.updateCronJon(schedule)
@@ -47,5 +48,16 @@ const updateFrequency = async(req,res,next)=>{
         return next(err)
     }
 }
+const updateApiKey = async(req,res,next)=>{
+    try{
+        const ApiKey = req.body.apikey;
+        process.env.WEATHER_API_KEY = ApiKey;
+        const envData = `WEATHER_API_KEY=${ApiKey}`;
+        fs.writeFileSync('.env', envData);
+    }
+    catch(err){
+        return next(err);
+    }
+}
 
-module.exports = {getUser,getUserById,deactivateUserById,updateFrequency}
+module.exports = {getUser,getUserById,deactivateUserById,updateMessageFrequency,updateApiKey}
