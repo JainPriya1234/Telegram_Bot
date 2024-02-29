@@ -1,7 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api');
-const User = require('../model/user')
 const adminService = require('./admin.service')
 const dotenv = require('dotenv');
+const User = require('../model/user');
 dotenv.config()
 
 const token = process.env.TELEGRAM_API
@@ -46,9 +46,7 @@ bot.on('message',async(msg)=>{
 })
 
 const sendMessageToUsers = async()=>{
-    const users = await adminService.getUser();
-    const bot = new TelegramBot(token, { polling: true }); 
-    console.log(users)
+    const users = await User.find();
     for(let i = 0; i < users.length; i++){
         await bot.sendMessage(users[i].chatId,"Today's Weather Report\n")
     }

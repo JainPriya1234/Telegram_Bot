@@ -6,11 +6,15 @@ const cronJob = cron.schedule(cronSchedule, async () => {
     await sendMessageToUsers();
 });
 
-const updateCronJon = ()=>{
-    const newSchedule = req.body.schedule; 
-    cronJob.stop();
-    cronSchedule = newSchedule; 
-    cronJob.start();
+const updateCronJon = (newSchedule)=>{
+    try{
+        cronJob.stop();
+        cronSchedule = newSchedule; 
+        cronJob.start();
+    }
+    catch(err){
+        throw new Error(err)
+    }
 }
 
 module.exports ={cronJob, updateCronJon}

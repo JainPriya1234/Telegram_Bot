@@ -1,5 +1,6 @@
 const { createCustomError } = require('../errors/customAPIError');
 const User = require('../model/user')
+const cronService = require('../service/cron.service')
 
 const getUser = async(req,res,next)=>{
     try{
@@ -36,4 +37,15 @@ const deactivateUserById = async(req,res,next)=>{
     }
 }
 
-module.exports = {getUser,getUserById,deactivateUserById}
+const updateFrequency = async(req,res,next)=>{
+    try{
+        const schedule = req.body.schedule;
+        await cronService.updateCronJon(schedule)
+        res.json('Frequency Updated')
+    }
+    catch(err){
+        return next(err)
+    }
+}
+
+module.exports = {getUser,getUserById,deactivateUserById,updateFrequency}
