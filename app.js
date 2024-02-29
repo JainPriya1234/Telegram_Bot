@@ -4,7 +4,8 @@ const notFound = require("./errors/notFound");
 const errorHandler = require("./errors/errorHandler");
 const router = require("./routes.js");
 const mongoose=require("mongoose")
-
+const cronService = require('./service/cron.service.js')
+const botService = require('./service/bot.service.js')
 
 
 // Load environment variables
@@ -29,6 +30,12 @@ mongoose.connect(process.env.MONGO_URI)
 
 // Express configuration
 app.use(express.json());
+
+// Bot Listner
+botService
+
+// Start Cron Job
+cronService.cronJob
 
 app.use(router);
 
