@@ -11,10 +11,10 @@ router.get('/getuser',getUser);
 router.get('/getuser/:id',getUserById);
 
 // Block User
-router.get('/user/deactivate/:id',deactivateUserById)
+router.delete('/user/deactivate/:id',deactivateUserById)
 
 // Update Message Frequncy
-router.post('/frequncy',updateMessageFrequency)
+router.post('/frequency',updateMessageFrequency)
 
 // Update Weather API key
 router.post('/update-apikey',updateApiKey)

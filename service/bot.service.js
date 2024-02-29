@@ -45,8 +45,11 @@ bot.on('message',async(msg)=>{
     }
 })
 
+/**
+ * @description Send Message to All Active users
+ */
 const sendMessageToUsers = async()=>{
-    const users = await User.find();
+    const users = await User.find({isActive:true});
     for(let i = 0; i < users.length; i++){
         await bot.sendMessage(users[i].chatId,"Today's Weather Report\n")
     }
