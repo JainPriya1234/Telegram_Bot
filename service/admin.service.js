@@ -65,4 +65,4 @@ const updateMessageFrequency = async(req,res,next)=>{
 }
 
 
-module.exports = {getUser,getUserById,deactivateUserById,updateMessageFrequency,updateApiKey}
+module.exports = {getUser,getUserById,deactivateUserById,updateMessageFrequency}

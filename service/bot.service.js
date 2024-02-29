@@ -2,6 +2,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const adminService = require('./admin.service')
 const dotenv = require('dotenv');
 const User = require('../model/user');
+const {countryCodes} = require('./country.codes')
 dotenv.config()
 
 const token = process.env.TELEGRAM_API
@@ -16,7 +17,7 @@ bot.on('message',async(msg)=>{
                 bot.sendMessage(chatId,'Welcome! \nPlease Provide Your Name');
                 await User.create({chatId:chatId})
             }
-            else bot.sendMessage(chatId,'Invalid Command!\nPlease use /Start to continue')
+            else bot.sendMessage(chatId,'Invalid Command!\nPlease use /start to continue')
             return;
         }
         else if(!isExist.name){
@@ -24,11 +25,15 @@ bot.on('message',async(msg)=>{
             bot.sendMessage(isExist.chatId,'Now Please Provide Your Country');
         }
         else if(!isExist.country){
-            isExist.country = textMessage;
-            bot.sendMessage(isExist.chatId,'Your City Please ^_^');
+            if(countryCodes.hasOwnProperty(textMessage.toLowerCase())){
+                isExist.country = countryCodes[textMessage.toLowerCase()];
+                bot.sendMessage(isExist.chatId,'Your City Please ^_^');
+            }
+            else bot.sendMessage(isExist.chatId,'Incorrect Country!')
         }
         else if(!isExist.city){
             isExist.city = textMessage;
+            isExist.isActive = true;
             bot.sendMessage(isExist.chatId,'Thankyou for your details, we will keep in touch with you with our weather reports');
         }
         else{
@@ -51,7 +56,21 @@ bot.on('message',async(msg)=>{
 const sendMessageToUsers = async()=>{
     const users = await User.find({isActive:true});
     for(let i = 0; i < users.length; i++){
-        await bot.sendMessage(users[i].chatId,"Today's Weather Report\n")
+        // Fetch Location
+        await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${users[i].city},${users[i].country}&limit=1&appid=${process.env.WEATHER_API}`)
+        .then((res)=>{
+            if(res.ok) return res.json();
+        })
+        // fetch Weather 
+        .then(async(getLocation)=>{
+            await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${getLocation[0].lat}&lon=${getLocation[0].lon}&appid=${process.env.WEATHER_API}`)
+            .then((res)=>{ if(res.ok) return res.json() })
+            .then(async(data)=>{
+                const report = `Your Weather Report 🌤\nCurrent Weather:${data.weather[0].main}\nDescription : ${data.weather[0].description}\nTemprature : ${(data.main.temp - 273.15).toFixed(2)} C\nVisibility:${data.visibility}\nWind Speed : ${data.wind.speed}`
+                await bot.sendMessage(users[i].chatId,report)
+            })
+        })
+        .catch((err)=>{console.log(err); bot.sendMessage(users[i].chatId,'Cannot Fetch Weather Report of City/Country\nPlease Update!')})
     }
 }
 

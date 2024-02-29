@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {getUser, getUserById, deactivateUserById, updateMessageFrequency, updateApiKey} = require('./service/admin.service')
+const {getUser, getUserById, deactivateUserById, updateMessageFrequency} = require('./service/admin.service')
 
 router.get("/", (req, res) => {
     res.send("API  is running!!!");
@@ -16,8 +16,6 @@ router.delete('/user/deactivate/:id',deactivateUserById)
 // Update Message Frequncy
 router.post('/frequency',updateMessageFrequency)
 
-// Update Weather API key
-router.post('/update-apikey',updateApiKey)
 
 
 

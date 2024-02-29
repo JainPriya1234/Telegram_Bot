@@ -13,8 +13,7 @@ const user  = new mongoose.Schema({
         type:String
     },
     isActive:{
-        type:Boolean,
-        default:true
+        type:Boolean
     }
 });
 
